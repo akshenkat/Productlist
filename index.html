@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Список товаров</h1>
+        <button @click="sortByPrice('asc')">Сортировать по цене (по возрастанию)</button>
+        <button @click="sortByPrice('desc')">Сортировать по цене (по убыванию)</button>
+        <ul>
+          <li v-for="product in sortedProducts" :key="product.name">
+            {{ product.name }} - {{ product.price }}
+          </li>
+        </ul>
+      </div>
+
+    <script>
+        new Vue({
+  el: '#app',
+  data: {
+    products: [
+      { name: 'Товар 1', price: 100 },
+      { name: 'Товар 2', price: 50 },
+      { name: 'Товар 3', price: 200 },
+      { name: 'Товар 4', price: 150 }
+    ],
+    sortBy: 'asc'
+  },
+  computed: {
+    sortedProducts: function() {
+      if (this.sortBy === 'asc') {
+        return this.products.slice().sort((a, b) => a.price - b.price);
+      } else {
+        return this.products.slice().sort((a, b) => b.price - a.price);
+      }
+    }
+  },
+  methods: {
+    sortByPrice: function(order) {
+      this.sortBy = order;
+    }
+  }
+});
+    </script>
+</body>
+
+</html>
